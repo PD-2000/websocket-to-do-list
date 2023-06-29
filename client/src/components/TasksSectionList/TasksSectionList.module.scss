@@ -1,0 +1,13 @@
+.list {
+  max-width: 400px;
+  list-style-type: none;
+  padding: 0;
+  margin: 20px auto 40px auto;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgb(83, 83, 83);
+}
