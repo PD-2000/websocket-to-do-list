@@ -8,8 +8,16 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:8000/');
+    const newSocket = io('http://localhost:8000');
     setSocket(newSocket);
+
+    newSocket.on('addTask', (task) => {
+      setTasks((tasks) => [...tasks, task]);
+    });
+
+    newSocket.on('removeTask', (taskId) => {
+      setTasks((tasks) => tasks.filter((task) => task.id !== taskId));
+    });
   }, []);
 
   const removeTask = (taskId) => {
