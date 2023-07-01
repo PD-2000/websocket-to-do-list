@@ -5,7 +5,7 @@ const socket = require('socket.io');
 
 app.use(cors());
 
-const tasks = [];
+let tasks = [];
 
 app.use((req, res) => {
   res.status(404).send({message: 'Not found...'});
@@ -23,11 +23,11 @@ io.on('connection', (socket) => {
   socket.on('addTask', (taskData) => {
     tasks.push(taskData);
     console.log('new task added by user ' + socket.id);
-    io.emit('updateData', tasks);
+    socket.broadcast.emit('updateData', tasks);
   });
   socket.on('removeTask', (taskId) => {
     console.log('Task ID to remove:', taskId);
     tasks = tasks.filter((task) => task.id !== taskId);
-    io.emit('updateData', tasks);
+    socket.broadcast.emit('updateData', tasks);
   });
 });

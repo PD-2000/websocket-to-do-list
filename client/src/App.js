@@ -18,6 +18,14 @@ const App = () => {
     newSocket.on('removeTask', (taskId) => {
       setTasks((tasks) => tasks.filter((task) => task.id !== taskId));
     });
+
+    newSocket.on('updateData', (tasks) => {
+      updateTasks(tasks);
+    });
+
+    return () => {
+      setSocket(null);
+    };
   }, []);
 
   const removeTask = (taskId) => {
@@ -28,6 +36,10 @@ const App = () => {
   const addTask = (task) => {
     setTasks((tasks) => [...tasks, task]);
     socket.emit('addTask', task);
+  };
+
+  const updateTasks = (tasks) => {
+    setTasks(tasks);
   };
 
   return (
